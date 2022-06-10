@@ -12,10 +12,12 @@ const dom = {
   validEmail: /^[\w.-]+@\w+\.[a-z]{2,4}$/i,
 };
 
-// dom.form.addEventListener('submit', submitFormHandler);
+dom.form.addEventListener("submit", submitFormHandler);
 dom.login.addEventListener("change", checkLogin);
-dom.login.addEventListener("change", checkPass);
-dom.login.addEventListener("change", checkPassCopy);
+dom.pass.addEventListener("change", checkPass);
+if (dom.passCopy) {
+  dom.passCopy.addEventListener("change", checkPassCopyLength);
+}
 
 function checkLogin() {
   if (!dom.validEmail.test(dom.login.value)) {
@@ -24,47 +26,54 @@ function checkLogin() {
   } else {
     dom.login.classList.remove("error");
     dom.invalidLogin.classList.remove("invalid-active");
+
+    return true;
   }
 }
 
 function checkPass() {
-  if (dom.pass.value.length < 8) {
+  if (dom.pass.value.length < 8 && dom.pass.value.length !== 0) {
     dom.pass.classList.add("error");
     dom.invalidPass.classList.add("invalid-active");
   } else {
     dom.pass.classList.remove("error");
     dom.invalidPass.classList.remove("invalid-active");
+    return true;
   }
 }
 
 function checkPassCopy() {
-  for (let i = 0; i < dom.passCopy.value.length; i++) {
-    if (dom.passCopy.value[i] !== dom.pass.value[i]) {
-      dom.passCopy.classList.add("error");
-      dom.invalidPassCopy.classList.add("invalid-active");
-    } else {
-      dom.passCopy.classList.remove("error");
-      dom.invalidPassCopy.classList.remove("invalid-active");
-    }
+  let regexp = new RegExp(dom.passCopy.value);
+
+  if (!regexp.test(dom.pass.value)) {
+    dom.passCopy.classList.add("error");
+    dom.invalidPassCopy.classList.add("invalid-active");
+  } else {
+    dom.passCopy.classList.remove("error");
+    dom.invalidPassCopy.classList.remove("invalid-active");
+    return true;
+  }
+}
+
+function checkPassCopyLength() {
+  if (dom.pass.value.length !== dom.passCopy.value.length) {
+    dom.passCopy.classList.add("error");
+    dom.invalidPassCopy.classList.add("invalid-active");
+    console.log("длина паролей не совпадает");
+  } else {
+    dom.passCopy.classList.remove("error");
+    dom.invalidPassCopy.classList.remove("invalid-active");
+    return true;
   }
 }
 
 function submitFormHandler(event) {
-  event.preventDefault();
-
-  if (!dom.validEmail.test(dom.login.value)) {
-    dom.login.classList.add("error");
-    dom.invalidLogin.classList.add("invalid-active");
-  } else {
-    dom.login.classList.remove("error");
-    dom.invalidLogin.classList.remove("invalid-active");
+  if (
+    !(checkLogin() && checkPass() && checkPassCopy() && checkPassCopyLength())
+  ) {
+    event.preventDefault();
+    console.log("есть ошибки заполнения");
+    return;
   }
-
-  if (dom.pass.value.length < 8) {
-    dom.pass.classList.add("error");
-    dom.invalidPass.classList.add("invalid-active");
-  } else {
-    dom.pass.classList.remove("error");
-    dom.invalidPass.classList.remove("invalid-active");
-  }
+  console.log("форма отправлена");
 }
