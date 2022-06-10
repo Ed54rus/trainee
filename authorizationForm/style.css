@@ -5,7 +5,7 @@
 }
 
 body {
-	background: #ccc;
+	background: #6897ad;
 	font-family: 'Nunito', sans-serif;
 	height: 100vh;
 	display: flex;
@@ -25,6 +25,7 @@ body {
 	width: 100%;
 	background-color: #fff;
 	border-radius: 16px;
+	box-shadow: 10px 10px 23px 0px rgba(0, 0, 0, 0.75);
 }
 
 .form__title {
@@ -63,8 +64,7 @@ body {
 }
 
 .form__btn {
-	margin-left: auto;
-	padding: 6px 16px;
+	padding: 6px 24px;
 
 	font-family: 'Nunito', sans-serif;
 	font-size: 12px;
