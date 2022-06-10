@@ -19,8 +19,9 @@
 		<input class="form__input" id="login" type="text" placeholder="E-mail" required>
 		<span class="invalid-input invalid-pass">Пароль содержит менее 8 символов</span>
 		<input class="form__input" id="pass" type="password" placeholder="Пароль" required>
-		<span class="invalid-input invalid-pass">Пароли не совпадают</span>
-		<input class="form__input" id="pass" type="password" placeholder="Повторите пароль" required>
+		<span class="invalid-input invalid-pass-copy">Пароли не совпадают</span>
+		<input class="form__input" id="pass-copy" type="password" onkeyup='checkPassCopy(event)'
+			placeholder="Повторите пароль" required>
 		<button class="form__btn" id="submit" type="submit">Зарегистрироваться</button>
 		<a class='form__link' href="./auth.html">Если вы уже зарегистрированы нажмите сюда</a>
 
